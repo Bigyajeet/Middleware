@@ -88,17 +88,17 @@ const ExpressError=require("./ExpressError")
 // });
 
 //generating own error
-app.get("/err",(req,res)=>{
-    abcd=abcd;
-});
-//err handler
-app.use((err,req,res,next)=>{
+// app.get("/err",(req,res)=>{
+//     abcd=abcd;
+// });
+// //err handler
+// app.use((err,req,res,next)=>{
 
-    console.log("__________Error_______");
-    res.send(err);
-    // next(); //looks for non-error handler
-    // next(err);//display the error in  the fronted
-});
+//     console.log("__________Error_______");
+//     res.send(err);
+//     // next(); //looks for non-error handler
+//     // next(err);//display the error in  the fronted
+// });
 
 
 // app.use((err,req,res,next)=>{
@@ -118,16 +118,16 @@ app.get("/random",(req,res)=>{
     res.send("this is a random page");
 });
 
-app.use("/api",(req,res,next)=>{
-    let {token}=req.query;
-    if(token==="bigya"){
-        res.send("Access granted")
-        next(err);
-    }else{
-        throw new ExpressError(401,"Access denied");
+// app.use("/api",(req,res,next)=>{
+//     let {token}=req.query;
+//     if(token==="bigya"){
+//         // res.send("Access granted")
+//         next();
+//     }else{
+//         throw new ExpressError(401,"Access denied");
         
-    }
-});
+//     }
+// });
 
 // app.use((req,res,next)=>{
 //     req.time=new Date(Date.now()).toString();
@@ -135,6 +135,32 @@ app.use("/api",(req,res,next)=>{
 //     next();
 // });
 
+app.get("/err",(req,res)=>{
+    abcd=abcd;
+});
+
+app.use((err,req,res,next)=>{
+
+    console.log("__________Error_______");
+    res.send(err);
+    
+});
+
+
+//creation of custom error
+const checkaccess=((req,res,next)=>{
+    let {token}=req.query;
+    if(token==="bigya"){
+       
+        next();
+    }
+        throw new ExpressError(401,"Access Denied");
+    
+});
+app.get(("/api"),checkaccess,(req,res,next)=>{
+    res.send("data");
+
+});
 
 //404 
 app.use((req,res)=>{
