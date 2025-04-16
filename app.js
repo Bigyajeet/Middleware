@@ -138,6 +138,10 @@ app.get("/random",(req,res)=>{
 app.get("/err",(req,res)=>{
     abcd=abcd;
 });
+//admin
+app.get("/admin",(req,res)=>{
+throw new ExpressError(403,"Admin access is denied");
+});
 //default status and error
 app.use((err,req,next)=>{ //handle error and send
     // let {status,message}=err;
