@@ -138,13 +138,18 @@ app.get("/random",(req,res)=>{
 app.get("/err",(req,res)=>{
     abcd=abcd;
 });
-
-app.use((err,req,res,next)=>{
-
-    console.log("__________Error_______");
-    res.send(err);
-    
+//default status and error
+app.use((err,req,next)=>{ //handle error and send
+    // let {status,message}=err;
+    let {status=501,message="Error Occurred"}=err;
+    req.status(status).send(message); //sends error
 });
+// app.use((err,req,res,next)=>{
+
+//     console.log("__________Error_______");
+//     res.send(err);
+    
+// });
 
 
 //creation of custom error
